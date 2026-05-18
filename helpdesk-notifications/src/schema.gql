@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Notification {
+  id: Int!
+  title: String!
+  message: String!
+  type: NotificationType!
+  recipient: String!
+  isRead: Boolean!
+  createdAt: DateTime!
+}
+
+"""Type de notification"""
+enum NotificationType {
+  SYSTEM
+  INFO
+  WARNING
+  ERROR
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  notifications: [Notification!]!
+  notification(id: Int!): Notification!
+}
+
+type Mutation {
+  createNotification(input: CreateNotificationInput!): Notification!
+  updateNotification(id: Int!, input: UpdateNotificationInput!): Notification!
+  removeNotification(id: Int!): Notification!
+  markNotificationAsRead(id: Int!): Notification!
+}
+
+input CreateNotificationInput {
+  title: String!
+  message: String!
+  type: NotificationType!
+  recipient: String!
+}
+
+input UpdateNotificationInput {
+  title: String
+  message: String
+  type: NotificationType
+  recipient: String
+  isRead: Boolean
+}
