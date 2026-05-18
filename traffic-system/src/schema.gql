@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Zone {
+  id: Int!
+  name: String!
+  location: String!
+  density: Int!
+  status: TrafficStatus!
+}
+
+enum TrafficStatus {
+  FAIBLE
+  MOYEN
+  ELEVE
+}
+
+type Query {
+  allZones: [Zone!]!
+  zone(id: Float!): Zone!
+  congestedZones: [Zone!]!
+}
+
+type Mutation {
+  createZone(input: CreateZoneInput!): Zone!
+  updateZone(id: Int!, input: UpdateZoneInput!): Zone!
+}
+
+input CreateZoneInput {
+  name: String!
+  location: String!
+  trafficDensity: Int!
+}
+
+input UpdateZoneInput {
+  name: String
+  location: String
+  trafficDensity: Int
+}
