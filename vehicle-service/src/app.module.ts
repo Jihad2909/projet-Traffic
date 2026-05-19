@@ -13,7 +13,7 @@ import { GpsPosition } from './gps/entity/gps-position.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5433, // port for whecule
+      port: 5433, // port for vehicle
       username: 'postgres',
       password: 'postgres',
       database: 'vehicle_db',
