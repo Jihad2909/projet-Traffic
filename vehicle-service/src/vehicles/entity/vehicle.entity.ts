@@ -26,6 +26,7 @@ export class Vehicle {
   @CreateDateColumn()
   createdAt: Date;
 
+  @Field(() => [GpsPosition], { nullable: true })
   @OneToMany(() => GpsPosition, (gps) => gps.vehicle)
   positions: GpsPosition[];
 }
