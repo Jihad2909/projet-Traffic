@@ -27,6 +27,8 @@ export class VehiclesService {
   }
 
   async findByImmatriculation(immatriculation: string): Promise<Vehicle> {
-    return this.vehicleRepository.findOne({ where: { immatriculation } });
+    const vehicle = await this.vehicleRepository.findOne({ where: { immatriculation } });
+    if (!vehicle) throw new NotFoundException('Vehicle not found');
+    return vehicle;
   }
 }
