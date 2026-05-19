@@ -1,48 +1,70 @@
+version: "3.8"
+
 services:
-
-  # =========================
-  # MYSQL DATABASE
-  # =========================
-  mysql:
-    image: mysql:8
-    container_name: mysql_db
-    restart: always
+  postgres-auth:
+    image: postgres:15
+    container_name: postgres-auth
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: smart_traffic
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: auth_db
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - auth_data:/var/lib/postgresql/data
+      - ./backups:/backups
 
-  # =========================
-  # BACKEND NODE + GRAPHQL
-  # =========================
-  backend:
-    build: ./backend
-    container_name: backend_api
-    restart: always
-    ports:
-      - "4000:4000"
-    depends_on:
-      - mysql
+  postgres-vehicle:
+    image: postgres:15
+    container_name: postgres-vehicle
     environment:
-      DB_HOST: mysql
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_NAME: smart_traffic
-
-  # =========================
-  # FRONTEND REACT
-  # =========================
-  frontend:
-    build: ./frontend
-    container_name: frontend_app
-    restart: always
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vehicle_db
     ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+      - "5433:5432"
+    volumes:
+      - vehicle_data:/var/lib/postgresql/data
+
+  postgres-traffic:
+    image: postgres:15
+    container_name: postgres-traffic
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: traffic_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - traffic_data:/var/lib/postgresql/data
+
+  postgres-incident:
+    image: postgres:15
+    container_name: postgres-incident
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: incident_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - incident_data:/var/lib/postgresql/data
+
+  postgres-notification:
+    image: postgres:15
+    container_name: postgres-notification
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: notification_db
+    ports:
+      - "5436:5432"
+    volumes:
+      - notification_data:/var/lib/postgresql/data
 
 volumes:
-  mysql_data:
+  auth_data:
+  vehicle_data:
+  traffic_data:
+  incident_data:
+  notification_data:
